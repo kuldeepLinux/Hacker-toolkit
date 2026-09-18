@@ -14,7 +14,7 @@ An all-in-one hacker-style utility toolkit that runs entirely in your browser. N
 
 ## 🚀 Live Demo
 
-**[https://kuldeeplinux.github.io/hacker-toolkit/](https://kuldeeplinux.github.io/hacker-toolkit/)**
+**[https://kuldeeplinux.github.io/hacker-toolkit/](https://kuldeeplinux.github.io/Hacker-toolkit/)**
 
 ---
 
