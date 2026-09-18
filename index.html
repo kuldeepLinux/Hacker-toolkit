@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hacker Toolkit | by Kuldeep</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/exif-js"></script>
+</head>
+<body>
+    <!-- Matrix Rain Canvas -->
+    <canvas id="matrixCanvas" class="matrix-rain"></canvas>
+    <div class="scanlines"></div>
+
+    <div class="container">
+        <!-- Terminal Bar -->
+        <div class="terminal-bar">
+            <span class="dot red"></span>
+            <span class="dot yellow"></span>
+            <span class="dot green"></span>
+            <span class="terminal-title">root@kuldeep:~/hacker-toolkit</span>
+        </div>
+
+        <!-- Header -->
+        <header>
+            <h1>
+                <span class="prompt">$</span>
+                <span class="typing">KULDEEP'S HACKER TOOLKIT</span>
+                <span class="cursor">_</span>
+            </h1>
+            <p class="subtitle">// All-in-one utility toolkit — made by Kuldeep</p>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="tool-nav">
+            <button class="nav-btn active" data-tool="metadata">📷 METADATA</button>
+            <button class="nav-btn" data-tool="password">🔐 PASSWORD</button>
+            <button class="nav-btn" data-tool="hash">#️⃣ HASH</button>
+            <button class="nav-btn" data-tool="base64">🔤 BASE64</button>
+        </nav>
+
+        <!-- Tool Area -->
+        <div class="tool-area">
+
+            <!-- Tool 1: Metadata -->
+            <div class="tool-panel active" id="tool-metadata">
+                <h2><span class="prompt">$</span> exif --extract</h2>
+                <p class="desc">Extract hidden metadata from images — camera, GPS, date</p>
+
+                <div class="upload-box" id="uploadBox">
+                    <input type="file" id="fileInput" accept="image/*" hidden>
+                    <div class="upload-content">
+                        <div class="icon">[ + ]</div>
+                        <p><strong>DROP IMAGE</strong> or click to upload</p>
+                        <p class="small">JPG · PNG · TIFF</p>
+                    </div>
+                </div>
+
+                <div class="preview" id="preview" style="display:none;">
+                    <img id="previewImg" alt="preview">
+                </div>
+
+                <div class="results" id="results" style="display:none;">
+                    <div id="metadataList"></div>
+                    <button id="clearBtn" class="secondary">[ CLEAR ]</button>
+                </div>
+            </div>
+
+            <!-- Tool 2: Password -->
+            <div class="tool-panel" id="tool-password">
+                <h2><span class="prompt">$</span> passwd --check</h2>
+                <p class="desc">Check password strength & generate secure passwords</p>
+
+                <div class="input-group">
+                    <label>Enter Password:</label>
+                    <input type="text" id="passwordInput" placeholder="Type password here...">
+                    <div class="strength-bar">
+                        <div class="strength-fill" id="strengthFill"></div>
+                    </div>
+                    <p class="strength-text" id="strengthText">Waiting for input...</p>
+                    <ul class="checks" id="passwordChecks">
+                        <li id="check-length">❌ At least 8 characters</li>
+                        <li id="check-upper">❌ Uppercase letter</li>
+                        <li id="check-lower">❌ Lowercase letter</li>
+                        <li id="check-number">❌ Number</li>
+                        <li id="check-special">❌ Special character (!@#$...)</li>
+                    </ul>
+                </div>
+
+                <div class="input-group">
+                    <label>Generate Strong Password:</label>
+                    <div class="generate-row">
+                        <input type="text" id="generatedPassword" placeholder="Click generate..." readonly>
+                        <button id="generateBtn">[ GENERATE ]</button>
+                    </div>
+                    <button id="copyPasswordBtn" class="secondary">[ COPY ]</button>
+                </div>
+            </div>
+
+            <!-- Tool 3: Hash -->
+            <div class="tool-panel" id="tool-hash">
+                <h2><span class="prompt">$</span> hash --generate</h2>
+                <p class="desc">Generate MD5, SHA-1, SHA-256 hashes</p>
+
+                <div class="input-group">
+                    <label>Enter Text:</label>
+                    <textarea id="hashInput" placeholder="Type text to hash..."></textarea>
+                    <button id="hashBtn">[ GENERATE HASHES ]</button>
+                </div>
+
+                <div class="hash-results" id="hashResults" style="display:none;">
+                    <div class="hash-item">
+                        <span class="hash-label">MD5:</span>
+                        <span class="hash-value" id="md5Result">-</span>
+                        <button class="copy-btn" data-copy="md5Result">[COPY]</button>
+                    </div>
+                    <div class="hash-item">
+                        <span class="hash-label">SHA-1:</span>
+                        <span class="hash-value" id="sha1Result">-</span>
+                        <button class="copy-btn" data-copy="sha1Result">[COPY]</button>
+                    </div>
+                    <div class="hash-item">
+                        <span class="hash-label">SHA-256:</span>
+                        <span class="hash-value" id="sha256Result">-</span>
+                        <button class="copy-btn" data-copy="sha256Result">[COPY]</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tool 4: Base64 -->
+            <div class="tool-panel" id="tool-base64">
+                <h2><span class="prompt">$</span> base64 --encode/decode</h2>
+                <p class="desc">Encode or decode Base64 text</p>
+
+                <div class="input-group">
+                    <label>Input:</label>
+                    <textarea id="base64Input" placeholder="Enter text or base64..."></textarea>
+                    <div class="button-row">
+                        <button id="encodeBtn">[ ENCODE → ]</button>
+                        <button id="decodeBtn">[ ← DECODE ]</button>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>Output:</label>
+                    <textarea id="base64Output" placeholder="Result..." readonly></textarea>
+                    <button id="copyBase64Btn" class="secondary">[ COPY ]</button>
+                </div>
+            </div>
+
+        </div>
+
+        <footer>
+            <p>🔒 100% browser-based — no data leaves your device</p>
+            <p class="credit">Made by <span class="name">Kuldeep</span></p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+    // Matrix Rain Effect
+    const canvas = document.getElementById('matrixCanvas');
+    const ctx = canvas.getContext('2d');
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const matrixChars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ$#@%&*';
+    const fontSize = 14;
+    const columns = canvas.width / fontSize;
+    const drops = [];
+
+    for (let i = 0; i < columns; i++) drops[i] = 1;
+
+    function drawMatrix() {
+        ctx.fillStyle = 'rgba(10, 14, 10, 0.05)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#00ff41';
+        ctx.font = fontSize + 'px monospace';
+        for (let i = 0; i < drops.length; i++) {
+            const text = matrixChars.charAt(Math.floor(Math.random() * matrixChars.length));
+            ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+            if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+            drops[i]++;
+        }
+    }
+    setInterval(drawMatrix, 50);
+    window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    });
+    </script>
+</body>
+</html>
